@@ -1,80 +1,76 @@
-# DNCS-LAB
+# DNCS-LAB assigment (working on...)
 
-This repository contains the Vagrant files required to run the virtual lab environment used in the DNCS course.
-```
+Design of Networks and Communication Systems  
+A/Y 2018-19  
+University of Trento
 
+## Assignment by Nicola Arnoldi
 
-        +-----------------------------------------------------+
-        |                                                     |
-        |                                                     |eth0
-        +--+--+                +------------+             +------------+
-        |     |                |            |             |            |
-        |     |            eth0|            |eth2     eth2|            |
-        |     +----------------+  router-1  +-------------+  router-2  |
-        |     |                |            |             |            |
-        |     |                |            |             |            |
-        |  M  |                +------------+             +------------+
-        |  A  |                      |eth1                       |eth1
-        |  N  |                      |                           |
-        |  A  |                      |                           |
-        |  G  |                      |                     +-----+----+
-        |  E  |                      |eth1                 |          |
-        |  M  |            +-------------------+           |          |
-        |  E  |        eth0|                   |           | host-2-c |
-        |  N  +------------+      SWITCH       |           |          |
-        |  T  |            |                   |           |          |
-        |     |            +-------------------+           +----------+
-        |  V  |               |eth2         |eth3                |eth0
-        |  A  |               |             |                    |
-        |  G  |               |             |                    |
-        |  R  |               |eth1         |eth1                |
-        |  A  |        +----------+     +----------+             |
-        |  N  |        |          |     |          |             |
-        |  T  |    eth0|          |     |          |             |
-        |     +--------+ host-1-a |     | host-1-b |             |
-        |     |        |          |     |          |             |
-        |     |        |          |     |          |             |
-        ++-+--+        +----------+     +----------+             |
-        | |                              |eth0                  |
-        | |                              |                      |
-        | +------------------------------+                      |
-        |                                                       |
-        |                                                       |
-        +-------------------------------------------------------+
+Based on the _Vagrantfile​_ and the provisioning scripts available at <https://github.com/dustnic/dncs-lab​>, the candidate is required to design a working network in witch any host configured and attached to​ _router-1​_ (through _switch​_) can browse a website hosted on _host-2-c_.
+Subnetting must be designed to meet the following requirements (no need to create more hosts than described in the _Vagrantfile_):
 
+-   up to 130 hosts in the same subnet of​ _host-1-a_
+-   up to 25 hosts in the same subnet of _host-1-b_
+-   consume as few IP addresses as possible
 
+## Network map
 
-```
+         +------------------------------------------------------------+
+         |                                                        eth0|
+     +---+---+                  +------------+                 +------+-----+
+     |       |                  |            |                 |            |
+     |       +------------------+  router-1  +-----------------+  router-2  |
+     |   v   |              eth0|            |eth2         eth2|            |
+     |   a   |                  +-----+------+                 +------+-----+
+     |   g   |                        |eth1                       eth1|
+     |   r   |                        |                               |
+     |   a   |                        |                           eth1|
+     |   n   |                        |eth1                     +-----+----+
+     |   t   |             +----------+-----------+             |          |
+     |       |             |                      |             |          |
+     |   m   +-------------+        switch        |             | host-2-c |
+     |   a   |         eth0|                      |             |          |
+     |   n   |             +---+--------------+---+             |          |
+     |   a   |                 |eth2      eth3|                 +-----+----+
+     |   g   |                 |              |                   eth0|
+     |   e   |                 |              |                       |
+     |   m   |                 |eth1      eth1|                       |
+     |   e   |           +-----+----+    +----+-----+                 |
+     |   n   |           |          |    |          |                 |
+     |   t   |           |          |    |          |                 |
+     |       +-----------+ host-1-a |    | host-1-b |                 |
+     |       |       eth0|          |    |          |                 |
+     |       |           |          |    |          |                 |
+     +--+-+--+           +----------+    +----+-----+                 |
+        | |                               eth0|                       |
+        | +-----------------------------------+                       |
+        +-------------------------------------------------------------+
 
-# Requirements
- - 10GB disk storage
- - 2GB free RAM
- - Virtualbox
- - Vagrant (https://www.vagrantup.com)
- - Internet
+## Subnets
 
-# How-to
- - Install Virtualbox and Vagrant
- - Clone this repository
-`git clone https://github.com/dustnic/dncs-lab`
- - You should be able to launch the lab from within the cloned repo folder.
-```
-cd dncs-lab
-[~/dncs-lab] vagrant up
-```
-Once you launch the vagrant script, it may take a while for the entire topology to become available.
- - Verify the status of the 4 VMs
- ```
- [dncs-lab]$ vagrant status                                                                                                                                                                
-Current machine states:
+| Subnet | Devices (Interface)                   | Network address   | Netmask         | # of hosts |
+| ------ | ------------------------------------- | ----------------- | --------------- | ---------- |
+| A      | router-1 (eth1.10)<br>host-1-a (eth1) | 172.22.1.0/24     | 255.255.255.0   | 254        |
+| B      | router-1 (eth1.20)<br>host-1-b (eth1) | 172.22.2.224/27   | 255.255.255.224 | 30         |
+| C      | router-2 (eth1)<br>host-2-c (eth1)    | 172.22.3.252/30   | 255.255.255.252 | 2          |
+| D      | router-1 (eth2)<br>router-2 (eth2)    | 172.31.255.252/30 | 255.255.255.252 | 2          |
 
-router                    running (virtualbox)
-switch                    running (virtualbox)
-host-a                    running (virtualbox)
-host-b                    running (virtualbox)
-```
-- Once all the VMs are running verify you can log into all of them:
-`vagrant ssh router`
-`vagrant ssh switch`
-`vagrant ssh host-a`
-`vagrant ssh host-b`
+## VLANs
+
+| VID | Subnet |
+| --- | ------ |
+| 10  | A      |
+| 20  | B      |
+
+## Interface-IP mapping
+
+| Device   | Interface | IP                | Subnet |
+| -------- | --------- | ----------------- | ------ |
+| host-1-a | eth1      | 172.22.1.1/24     | A      |
+| router-1 | eth1.10   | 172.22.1.254/24   | A      |
+| host-1-b | eth1      | 172.22.2.225/27   | B      |
+| router-1 | eth1.20   | 172.22.2.254/27   | B      |
+| host-2-c | eth1      | 172.22.3.253/30   | C      |
+| router-2 | eth1      | 172.22.3.254/30   | C      |
+| router-1 | eth2      | 172.31.255.253/30 | D      |
+| router-2 | eth2      | 172.31.255.254/30 | D      |
