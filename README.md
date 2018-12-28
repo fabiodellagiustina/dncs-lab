@@ -81,4 +81,4 @@ Subnetting must be designed to meet the following requirements (no need to creat
 | router-1 | eth2      | 172.31.255.253/30 | D                  |
 | router-2 | eth2      | 172.31.255.254/30 | D                  |
 
-## router-1 configuration (router-1.sh)
+## router-1 configuration ([router-1.sh](/router-1.sh))
