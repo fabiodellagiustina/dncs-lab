@@ -10,7 +10,7 @@ Do you know Vagrant? No? You must check [this](https://www.vagrantup.com/)!
 
 ## Assignment by Nicola Arnoldi
 
-Based on the _Vagrantfile​_ and the provisioning scripts available at <https://github.com/dustnic/dncs-lab​>, the candidate is required to design a working network in witch any host configured and attached to​ _router-1​_ (through _switch​_) can browse a website hosted on _host-2-c_.
+Based on the _Vagrantfile​_ and the provisioning scripts available at <https://github.com/dustnic/dncs-lab>, the candidate is required to design a working network in witch any host configured and attached to​ _router-1​_ (through _switch​_) can browse a website hosted on _host-2-c_.
 Subnetting must be designed to meet the following requirements (no need to create more hosts than described in the _Vagrantfile_):
 
 -   up to 130 hosts in the same subnet of​ _host-1-a_
