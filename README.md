@@ -57,20 +57,20 @@ Subnetting must be designed to meet the following requirements (no need to creat
 
 ## VLANs
 
-| VID | Subnet |
-| --- | ------ |
-| 10  | A      |
-| 20  | B      |
+| VID | [Subnet](#subnets) |
+| --- | ------------------ |
+| 10  | A                  |
+| 20  | B                  |
 
 ## Interface-IP mapping
 
-| Device   | Interface | IP                | Subnet |
-| -------- | --------- | ----------------- | ------ |
-| host-1-a | eth1      | 172.22.1.1/24     | A      |
-| router-1 | eth1.10   | 172.22.1.254/24   | A      |
-| host-1-b | eth1      | 172.22.2.225/27   | B      |
-| router-1 | eth1.20   | 172.22.2.254/27   | B      |
-| host-2-c | eth1      | 172.22.3.253/30   | C      |
-| router-2 | eth1      | 172.22.3.254/30   | C      |
-| router-1 | eth2      | 172.31.255.253/30 | D      |
-| router-2 | eth2      | 172.31.255.254/30 | D      |
+| Device   | Interface | IP                | [Subnet](#subnets) |
+| -------- | --------- | ----------------- | ------------------ |
+| host-1-a | eth1      | 172.22.1.1/24     | A                  |
+| router-1 | eth1.10   | 172.22.1.254/24   | A                  |
+| host-1-b | eth1      | 172.22.2.225/27   | B                  |
+| router-1 | eth1.20   | 172.22.2.254/27   | B                  |
+| host-2-c | eth1      | 172.22.3.253/30   | C                  |
+| router-2 | eth1      | 172.22.3.254/30   | C                  |
+| router-1 | eth2      | 172.31.255.253/30 | D                  |
+| router-2 | eth2      | 172.31.255.254/30 | D                  |
