@@ -6,7 +6,7 @@ University of Trento
 
 * * *
 
-Do you know Vagrant? No? You must check this! <https://www.vagrantup.com/>
+Do you know Vagrant? No? You must check [this](https://www.vagrantup.com/)!
 
 ## Assignment by Nicola Arnoldi
 
@@ -50,7 +50,9 @@ Subnetting must be designed to meet the following requirements (no need to creat
         | +-----------------------------------+                       |
         +-------------------------------------------------------------+
 
-## Subnets
+## Network configuration
+
+### Subnets
 
 | Subnet | Devices (Interface)                   | Network address   | Netmask         | # of hosts |
 | ------ | ------------------------------------- | ----------------- | --------------- | ---------- |
@@ -59,14 +61,14 @@ Subnetting must be designed to meet the following requirements (no need to creat
 | C      | router-2 (eth1)<br>host-2-c (eth1)    | 172.22.3.252/30   | 255.255.255.252 | 2          |
 | D      | router-1 (eth2)<br>router-2 (eth2)    | 172.31.255.252/30 | 255.255.255.252 | 2          |
 
-## VLANs
+### VLANs
 
 | VID | [Subnet](#subnets) |
 | --- | ------------------ |
 | 10  | A                  |
 | 20  | B                  |
 
-## Interface-IP mapping
+### Interface-IP mapping
 
 | Device   | Interface | IP                | [Subnet](#subnets) |
 | -------- | --------- | ----------------- | ------------------ |
@@ -78,7 +80,5 @@ Subnetting must be designed to meet the following requirements (no need to creat
 | router-2 | eth1      | 172.22.3.254/30   | C                  |
 | router-1 | eth2      | 172.31.255.253/30 | D                  |
 | router-2 | eth2      | 172.31.255.254/30 | D                  |
-
-## Environment configuration
 
 ## router-1 configuration (router-1.sh)
