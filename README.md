@@ -4,6 +4,10 @@ Design of Networks and Communication Systems
 A/Y 2018-19  
 University of Trento
 
+* * *
+
+Do you know Vagrant? No? You must check this! <https://www.vagrantup.com/>
+
 ## Assignment by Nicola Arnoldi
 
 Based on the _Vagrantfile​_ and the provisioning scripts available at <https://github.com/dustnic/dncs-lab​>, the candidate is required to design a working network in witch any host configured and attached to​ _router-1​_ (through _switch​_) can browse a website hosted on _host-2-c_.
@@ -74,3 +78,7 @@ Subnetting must be designed to meet the following requirements (no need to creat
 | router-2 | eth1      | 172.22.3.254/30   | C                  |
 | router-1 | eth2      | 172.31.255.253/30 | D                  |
 | router-2 | eth2      | 172.31.255.254/30 | D                  |
+
+## Environment configuration
+
+## router-1 configuration (router-1.sh)
