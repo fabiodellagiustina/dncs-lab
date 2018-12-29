@@ -1,7 +1,6 @@
 # DNCS-LAB assigment (working on...)
 
-Design of Networks and Communication Systems
-A/Y 2018-19
+Design of Networks and Communication Systems A/Y 2018-19  
 University of Trento
 
 ## Before starting
@@ -124,12 +123,10 @@ end
 
 #### router-1: Virtual machine configuration
 
-In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _router-1_. Then I add 2 interfaces:
+In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _router-1_ and add 2 interfaces:
 
 -   _eth1_ connected to _switch_
 -   _eth2_ connected to _router-2_
-
-After VM installation, it will run _router-1.sh_ provisioning script.
 
 ```ruby
 config.vm.define "router-1" do |router1|
@@ -141,13 +138,20 @@ config.vm.define "router-1" do |router1|
 end
 ```
 
+After VM installation, it will run _router-1.sh_ provisioning script.
+
 #### router-1: Provisioning script
 
-In [router-1.sh](/router-1.sh) with the following lines, I add the 2 VLAN links necessary to trunk the connection between _router-1_ and _switch_. Then I assign IP addresses for each interface and set them up.
+In [router-1.sh](/router-1.sh) with the following lines, I add the 2 VLAN links necessary to trunk the connection between _router-1_ and _switch_.
 
 ```bash
 ip link add link eth1 name eth1.10 type vlan id 10
 ip link add link eth1 name eth1.20 type vlan id 20
+```
+
+Then I assign IP addresses for each interface and set them up.
+
+```bash
 ip addr add 172.22.1.254/24 dev eth1.10
 ip addr add 172.22.2.254/27 dev eth1.20
 ip addr add 172.31.255.253/30 dev eth2
@@ -172,12 +176,10 @@ vtysh -c 'configure terminal' -c 'router ospf' -c 'redistribute connected'
 
 #### router-2: Virtual machine configuration
 
-In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _router-2_. Then I add 2 interfaces:
+In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _router-2_ and add 2 interfaces:
 
 -   _eth1_ connected to _host-2-c_
 -   _eth2_ connected to _router-1_
-
-After VM installation, it will run _router-2.sh_ provisioning script.
 
 ```ruby
 config.vm.define "router-2" do |router2|
@@ -188,6 +190,8 @@ config.vm.define "router-2" do |router2|
   router2.vm.provision "shell", path: "router-2.sh"
 end
 ```
+
+After VM installation, it will run _router-2.sh_ provisioning script.
 
 #### router-2: Provisioning script
 
@@ -215,13 +219,11 @@ vtysh -c 'configure terminal' -c 'router ospf' -c 'redistribute connected'
 
 #### switch: Virtual machine configuration
 
-In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _switch_. Then I add 3 interfaces:
+In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _switch_ and add 3 interfaces:
 
 -   _eth1_ connected to _router-1_
 -   _eth2_ connected to _host-1-a_
 -   _eth3_ connected to _host-1-b_
-
-After VM installation, it will run _switch.sh_ provisioning script.
 
 ```ruby
 config.vm.define "switch" do |switch|
@@ -234,21 +236,26 @@ config.vm.define "switch" do |switch|
 end
 ```
 
+After VM installation, it will run _switch.sh_ provisioning script.
+
 #### switch: Provisioning script
 
 In [switch.sh](/switch.sh) with the following lines, I create a bridge named _switch_ and add the interfaces to it:
 
--   _eth1_ as trunk port
--   _eth2_ as access port for VLAN 10
--   _eth3_ as access port for VLAN 20
-
-Finally I set interfaces and ovs-system up.
+-   _eth1_ as a trunk port
+-   _eth2_ as an access port for VLAN 10
+-   _eth3_ as an access port for VLAN 20
 
 ```bash
 ovs-vsctl add-br switch
 ovs-vsctl add-port switch eth1
 ovs-vsctl add-port switch eth2 tag=10
 ovs-vsctl add-port switch eth3 tag=20
+```
+
+Finally I set interfaces and ovs-system up.
+
+```bash
 ip link set eth1 up
 ip link set eth2 up
 ip link set eth3 up
@@ -259,7 +266,7 @@ ip link set dev ovs-system up
 
 #### host-1-a: Virtual machine configuration
 
-In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _host-1-a_. Then I add interface _eth1_ connected to _switch_. After VM installation, it will run _host-1-a.sh_ provisioning script.
+In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _host-1-a_ and add interface _eth1_ connected to _switch_.
 
 ```ruby
 config.vm.define "host-1-a" do |host1a|
@@ -269,6 +276,8 @@ config.vm.define "host-1-a" do |host1a|
   host1a.vm.provision "shell", path: "host-1-a.sh"
 end
 ```
+
+After VM installation, it will run _host-1-a.sh_ provisioning script.
 
 #### host-1-a: Provisioning script
 
@@ -284,7 +293,7 @@ ip route replace 172.16.0.0/12 via 172.22.1.254
 
 #### host-1-b: Virtual machine configuration
 
-In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _host-1-b_. Then I add interface _eth1_ connected to _switch_. After VM installation, it will run _host-1-b.sh_ provisioning script.
+In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _host-1-b_ and add interface _eth1_ connected to _switch_.
 
 ```ruby
 config.vm.define "host-1-b" do |host1b|
@@ -294,6 +303,8 @@ config.vm.define "host-1-b" do |host1b|
   host1b.vm.provision "shell", path: "host-1-b.sh"
 end
 ```
+
+After VM installation, it will run _host-1-b.sh_ provisioning script.
 
 #### host-1-b: Provisioning script
 
@@ -309,7 +320,7 @@ ip route replace 172.16.0.0/12 via 172.22.2.254
 
 #### host-2-c: Virtual machine configuration
 
-In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _host-2-c_. Then I add interface _eth1_ connected to _router-2_. After VM installation, it will run _host-2-c.sh_ provisioning script.
+In [Vagrantfile](/Vagrantfile) with the following lines, I create a trusty64 based virtual machine named _host-2-c_ and add interface _eth1_ connected to _router-2_.
 
 ```ruby
 config.vm.define "host-2-c" do |host2c|
@@ -319,6 +330,8 @@ config.vm.define "host-2-c" do |host2c|
   host2c.vm.provision "shell", path: "host-2-c.sh"
 end
 ```
+
+After VM installation, it will run _host-2-c.sh_ provisioning script.
 
 #### host-2-c: Provisioning script
 
@@ -330,12 +343,17 @@ ip link set eth1 up
 ip route replace 172.16.0.0/12 via 172.22.3.254
 ```
 
-Then I start an Apache container named _webserver_ on port 80 mounting /var/www/ directory (`docker kill` and `docker rm` will clear any existing containers). Finally I write a simple homepage in /var/www/index.html
+Next I start an Apache container named _webserver_ on port 80 mounting `/var/www/` directory (`docker kill` and `docker rm` will clear any existing containers).
 
 ```bash
 docker kill $(docker ps -q)
 docker rm $(docker ps -aq)
 docker run -dit --name webserver -p 80:80 -v /var/www/:/usr/local/apache2/htdocs/ httpd:2.4
+```
+
+Finally I write a simple HTML homepage in `/var/www/index.html`.
+
+```bash
 echo "<!DOCTYPE html>
 <html>
 <head>
