@@ -366,3 +366,38 @@ This is the hostc website homepage
 ```
 
 ## How-to (working on...)
+
+-   Install VirtualBox
+
+-   Install Vagrant
+
+-   Clone this repository
+
+    ```bash
+    ~$ git clone https://github.com/fabiodellagiustina/dncs-lab.git
+    ```
+
+-   Move into the repository and start creating the machines (on first launch, you don't need `--provision`, it will do it by default)
+
+    ```bash
+    ~$ cd dncs-lab/
+    ~/dncs-lab$ vagrant up --provision
+    ```
+
+-   Now it's all set up
+
+-   To test reachability, you can now ping any machine from any other, for example to ping _host-1-b_ from _host-1-a_ (`vagrant ssh` will ssh into a running Vagrant machine and give you access to a shell, `logout` to disconnect):
+
+    ```bash
+    ~/dncs-lab$ vagrant ssh host-1-a
+    vagrant@host-1-a:~$ ping 172.22.2.225
+    ```
+
+    and vice versa:
+
+    ```bash
+    ~/dncs-lab$ vagrant ssh host-1-b
+    vagrant@host-1-a:~$ ping 172.22.1.1
+    ```
+
+-   YAY
