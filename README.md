@@ -1,7 +1,37 @@
-# DNCS-LAB assigment (working on...)
+# DNCS-LAB assigment
 
 Design of Networks and Communication Systems A/Y 2018-19  
 University of Trento
+
+## Table of contents
+
+-   [Before starting](#before-starting)
+-   [Assignment by Nicola Arnoldi](#assignment-by-nicola-arnoldi)
+-   [Network map](#network-map)
+-   [Network configuration](#network-configuration)
+    -   [Subnets](#subnets)
+    -   [VLANs](#vlans)
+    -   [Interface-IP mapping](#interface-ip-mapping)
+-   [Vagrant and devices configuration](#vagrant-and-devices-configuration)
+    -   [router-1](#router-1)
+        -   [Virtual machine configuration](#router-1--virtual-machine-configuration)
+        -   [Provisioning script](#router-1--provisioning-script)
+    -   [router-2](#router-2)
+        -   [Virtual machine configuration](#router-2--virtual-machine-configuration)
+        -   [Provisioning script](#router-2--provisioning-script)
+    -   [switch](#switch)
+        -   [Virtual machine configuration](#switch--virtual-machine-configuration)
+        -   [Provisioning script](#switch--provisioning-script)
+    -   [host-1-a](#host-1-a)
+        -   [Virtual machine configuration](#host-1-a--virtual-machine-configuration)
+        -   [Provisioning script](#host-1-a--provisioning-script)
+    -   [host-1-b](#host-1-b)
+        -   [Virtual machine configuration](#host-1-b--virtual-machine-configuration)
+        -   [Provisioning script](#host-1-b--provisioning-script)
+    -   [host-2-c](#host-2-c)
+        -   [Virtual machine configuration](#host-2-c--virtual-machine-configuration)
+        -   [Provisioning script](#host-2-c--provisioning-script)
+-   [How-to](#how-to)
 
 ## Before starting
 
@@ -365,7 +395,7 @@ This is the hostc website homepage
 </html>" > /var/www/index.html
 ```
 
-## How-to (working on...)
+## How-to
 
 -   Install VirtualBox
 
@@ -386,7 +416,13 @@ This is the hostc website homepage
 
 -   Now it's all set up
 
--   To test reachability, you can now ping any machine from any other, for example to ping _host-1-b_ from _host-1-a_ (`vagrant ssh` will ssh into a running Vagrant machine and give you access to a shell, `logout` to disconnect):
+-   Use `vagrant ssh` to ssh into a running Vagrant machine, for example:
+
+    ```bash
+    ~/dncs-lab$ vagrant ssh host-1-a
+    ```
+
+-   To test reachability, you can now ping any machine from any other, for example to ping _host-1-b_ from _host-1-a_:
 
     ```bash
     ~/dncs-lab$ vagrant ssh host-1-a
@@ -397,7 +433,25 @@ This is the hostc website homepage
 
     ```bash
     ~/dncs-lab$ vagrant ssh host-1-b
-    vagrant@host-1-a:~$ ping 172.22.1.1
+    vagrant@host-1-b:~$ ping 172.22.1.1
     ```
 
--   YAY
+-   To browse the website hosted on _host-2-c_:
+
+    ```bash
+    curl 172.22.3.253
+    ```
+
+    The output will be:
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Home - hostc</title>
+    </head>
+    <body>
+    This is the hostc website homepage
+    </body>
+    </html>
+    ```
