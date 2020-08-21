@@ -1,8 +1,5 @@
-# DNCS-LAB assigment
-
-Design of Networks and Communication Systems  
-A.Y. 2018/19  
-University of Trento
+# DNCS-LAB assignment
+*Design of Networks and Communication Systems A.Y. 2018/2019 - UniTN*
 
 ## Table of contents
 
